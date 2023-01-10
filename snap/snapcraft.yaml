@@ -1,0 +1,40 @@
+name: openvpn
+base: core18
+version: '2.4.4'
+summary:  Secure IP tunnel daemon
+description: |
+  OpenVPN is an open source VPN daemon by James Yonan.
+grade: devel
+confinement: devmode
+
+# environment:
+#     LD_LIBRARY_PATH: $SNAP/usr/local/lib
+
+apps:
+  openvpn:
+    command: sbin/openvpn
+
+parts:
+  openvpn:
+    plugin: autotools
+    configflags:
+      - --enable-iproute2
+    source: https://github.com/OpenVPN/openvpn.git
+    source-tag: v2.4.4
+    build-packages:
+      - libssl-dev
+      - liblz4-dev
+      - iproute2
+      - liblzo2-dev
+      - libpam0g-dev
+    # stage-packages:
+    #   - libsctp1
+    # filesets:
+    #   include:
+    #     - usr/lib/$SNAPCRAFT_ARCH_TRIPLET
+    #     - usr/local/bin/iperf3
+    #     - usr/local/lib
+    # stage:
+    #   - $include
+    # prime:
+    #   - $include
